@@ -1,0 +1,58 @@
+*** Settings ***
+Library                SeleniumLibrary
+#Library                AutoItLibrary3
+
+
+*** Variables ***
+${BROWSER}  chrome
+${URL}  https://codenboxautomationlab.com/practice/
+#${URL}   https://www.google.com/
+${input text}   xpath=//*[@id="autocomplete"]   thai
+
+*** Keywords ***
+Open Web
+    Open Browser    ${URL}      ${BROWSER} 
+    Maximize Browser Window
+    Set Selenium Speed 0.3
+
+    Input Text      ${input text}
+
+
+*** Test Cases ***
+example_homepage
+   Open Browser    ${URL}      ${BROWSER} 
+    ...    options=add_experimental_option("detach", True)
+    Maximize Browser Window
+    Wait Until Page Contains Element    xpath=/html/body
+#    Sleep 2s
+ทำการเลือก Radio 2 ในหัวข้อ Radio Button Example
+    Click Element   xpath=//*[@id="radio-btn-example"]/fieldset/label[2]/input
+    Sleep   2s
+#    Wait Until Page Containts Element   xpath=/html/body
+
+ค้นหาข้อมูลคำว่าไทย ในหัวข้อ Dynamic Dropdown Example
+    Wait Until Page Contains Element    xpath=/html/body
+    Element Should Be Visible       xpath=//*[@id="select-class-example"]
+    Sleep   2s
+    Click Element                   xpath=//*[@id="autocomplete"]
+    Input Text                      xpath=//*[@id="autocomplete"]   thai
+    Sleep   2s
+    #Select From List By Value       xpath=/html/body/div[5]/div[6] Thailand
+    #Wait Until Page Contains Element    xpath=/html/body
+    #Select From List By Label       xpath=//*[@id="autocomplete"]   Thailand
+
+เลือก API ใน Drop Down List ในหัวข้อ Static Dropdown Example
+    Wait Until Page Contains Element    xpath=/html/body
+    Select From List By Label   dropdown-class-example  API
+    Sleep   2s
+
+Check Option1 และ Option 3 ใน Checkbox Example
+    Wait Until Page Contains Element    xpath=/html/body
+    Select Checkbox     id:checkBoxOption1
+    Sleep   2s
+    Select Checkbox     id:checkBoxOption3
+    Sleep   1s
+
+ชี้ที่ปุ่ม Mouse Hover โดยห้ามทำการคลิกที่ปุ่ม ในหัวข้อ Mouse Hover Example
+    Wait Until Page Contains Element    xpath=/html/body
+    Mouse Over  xpath=//*[@id="mousehover"]
